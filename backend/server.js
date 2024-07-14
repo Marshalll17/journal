@@ -1,4 +1,4 @@
-// server.js
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
@@ -9,12 +9,11 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-// Updated MongoDB connection
 mongoose
-  .connect(
-    'mongodb+srv://mks17:1234@cluster0.gqw1sbj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB', err))
 
@@ -46,7 +45,7 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
   if (user && (await bcrypt.compare(password, user.password))) {
-    const token = jwt.sign({ userId: user._id }, 'secret_key')
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET)
     res.json({ token })
   } else {
     res.status(400).send('Invalid credentials')
@@ -57,7 +56,7 @@ app.post('/login', async (req, res) => {
 const auth = (req, res, next) => {
   const token = req.header('Authorization').replace('Bearer ', '')
   try {
-    const decoded = jwt.verify(token, 'secret_key')
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
     req.userId = decoded.userId
     next()
   } catch (e) {
@@ -94,4 +93,5 @@ app.delete('/tasks/:id', auth, async (req, res) => {
   res.send('Task deleted')
 })
 
-app.listen(3000, () => console.log('Server running on port 3000'))
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
