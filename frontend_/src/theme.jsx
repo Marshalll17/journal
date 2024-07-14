@@ -1,7 +1,9 @@
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
-  // Customize your theme here
+  typography: {
+    fontFamily: ['JetBrains Mono', 'monospace'].join(','),
+  },
 })
 
 export default theme

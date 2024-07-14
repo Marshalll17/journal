@@ -1,44 +1,70 @@
 import React from 'react'
-import { Container, Typography, Button } from '@mui/material'
+import { Container, Typography, Button, Box, Paper } from '@mui/material'
+import { styled } from '@mui/system'
+
+const BackgroundContainer = styled(Box)({
+  minHeight: '100vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: '#f5f5f5',
+})
+
+const ContentPaper = styled(Paper)({
+  padding: '40px',
+  borderRadius: '20px',
+  boxShadow: 'none',
+  background: 'white',
+  border: '1px solid #e0e0e0',
+})
+
+const Title = styled(Typography)({
+  fontWeight: 900,
+  color: '#333',
+  marginBottom: '20px',
+  fontSize: '3rem',
+  letterSpacing: '-0.5px',
+})
+
+const Subtitle = styled(Typography)({
+  color: '#666',
+  marginBottom: '30px',
+  lineHeight: 1.6,
+})
+
+const StyledButton = styled(Button)({
+  background: '#333',
+  color: 'white',
+  padding: '12px 24px',
+  borderRadius: '30px',
+  textTransform: 'none',
+  fontSize: '1rem',
+  fontWeight: 600,
+  '&:hover': {
+    background: '#555',
+  },
+})
+
+const Accent = styled('span')({
+  color: '#4a90e2',
+})
 
 const HomePage = ({ onGetStarted }) => {
   return (
-    <Container
-      component='main'
-      maxWidth='xs'
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        backgroundImage: 'url(/path-to-your-image.jpg)', // Use a proper path to your background image
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        textAlign: 'center',
-      }}
-    >
-      <Typography
-        variant='h2'
-        component='h1'
-        gutterBottom
-        sx={{ color: 'gold', fontWeight: 'bold' }}
-      >
-        Journal
-      </Typography>
-      <Typography variant='h5' paragraph sx={{ color: 'white', mb: 4 }}>
-        Welcome to the Journal App. Manage your tasks efficiently and
-        effectively. Create, update, and delete tasks with ease.
-      </Typography>
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={onGetStarted}
-        sx={{ px: 4, py: 2, fontSize: '1.2rem' }}
-      >
-        Get Started
-      </Button>
-    </Container>
+    <BackgroundContainer>
+      <Container maxWidth='sm'>
+        <ContentPaper elevation={0}>
+          <Title variant='h1'>
+            #TO-<Accent>DO's</Accent>
+          </Title>
+          <Subtitle variant='body1'>
+            Simplify your life, one task at a time. Create, manage, and track
+            your to-dos with ease and elegance.
+          </Subtitle>
+          <StyledButton onClick={onGetStarted}>Start Organizing</StyledButton>
+        </ContentPaper>
+      </Container>
+    </BackgroundContainer>
   )
 }
 
