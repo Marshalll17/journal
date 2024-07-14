@@ -1,5 +1,4 @@
-
-markdownCopy# MyTo Note App
+# MyTo Note App
 
 MyTo Note App is a React-based task management application that allows users to create, organize, and track their tasks efficiently.
 
